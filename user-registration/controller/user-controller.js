@@ -3,7 +3,7 @@ import * as userService from '../service/user-service'
 
 export async function register(event,context){
     try {
-        const payload = JSON.parse(event.body)
+        const payload = JSON.parse(event.body) || {}
         await connectDb()
         const result = await userService.registerUser(payload);
         console.log(result)
@@ -25,5 +25,19 @@ export async function userList(){
         await disConnectionDb();
         console.log('error in getting data',error)
         return error
+    }
+}
+
+export async function getUserById(event){
+    try {
+        const payload = event?.pathParameters;
+        await connectDb();
+        const result = await userService.getUserById(payload);
+        await disConnectionDb();
+        return result
+    } catch (error) {
+        await disConnectionDb()
+        console.log(error.message)
+        return error.message
     }
 }

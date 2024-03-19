@@ -38,3 +38,13 @@ functions:
             origin: ["*"]
             headers: ["*"]
 
+  getUserById: 
+    handler: controller/user-controller.getUserById
+    events:
+      - httpApi:
+          path: user/{id}
+          method: GET
+          cors:
+            origin: ["*"]
+            headers: ["*"]
+

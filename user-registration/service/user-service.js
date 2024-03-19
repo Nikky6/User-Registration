@@ -34,3 +34,15 @@ export async function userList(){
         return error
     }
 }
+
+export async function getUserById(payload){
+    try {
+        const data = await UserRepository.getUserById(payload?.id);
+        if(!data){
+            throw 'No data found'
+        }
+        return data
+    } catch (error) {
+        return error
+    }
+}
