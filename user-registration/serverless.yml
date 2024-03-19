@@ -1,0 +1,30 @@
+service: user-registration
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+  
+plugins:
+  - serverless-offline
+  - serverless-esbuild
+
+functions:
+  api:
+    handler: index.handler
+    events:
+      - httpApi:
+          path: /
+          method: get
+
+  register: 
+    handler: controller/user-controller.register
+    events:
+      - httpApi:
+          path: user/register
+          method: POST
+          cors:
+            origin: ["*"]
+            headers: ["*"]
+
