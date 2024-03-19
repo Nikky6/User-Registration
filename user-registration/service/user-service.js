@@ -16,7 +16,6 @@ export async function registerUser(payload){
             gender:payload?.gender,
             age:payload?.age
         });
-        console.log(newUser)
         return newUser
     } catch (error) {
         return error
