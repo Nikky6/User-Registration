@@ -46,3 +46,25 @@ export async function getUserById(payload){
         return error
     }
 }
+
+export async function updateUser(payload){
+    try {
+        let findUser = await UserRepository.findUserByEmail({email:payload?.email});
+        if(!findUser){
+            throw "No user found"
+        }
+        const result = await UserRepository.update({
+            firstName:payload?.firstName,
+            lastName:payload?.lastName,
+            email:payload?.email,
+            password:payload?.password,
+            confrimPassword:payload?.confrimPassword,
+            mobile:payload?.mobile,
+            gender:payload?.gender,
+            age:payload?.age
+        });
+        return result
+    } catch (error) {
+        return error
+    }
+}

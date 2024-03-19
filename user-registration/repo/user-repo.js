@@ -18,11 +18,11 @@ export class UserRepository {
         return await User.findOne({ email: payload?.email });
     }
 
-    static async updateUser(payload) {
+    static async update(payload) {
         return await User.updateOne(payload);
     }
 
-    static async deleteUser(payload) {
+    static async delete(payload) {
         return await User.deleteOne(payload);
     }
 }

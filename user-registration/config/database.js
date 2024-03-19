@@ -12,7 +12,7 @@ export async function connectDb() {
     }
 }
 
-export async function disConnectionDb() {
+export async function disConnectDb() {
     try {
         const disConnect = await mongoose.disconnect(process.env.MONGO_URL);
         console.log('disconnected from Db')

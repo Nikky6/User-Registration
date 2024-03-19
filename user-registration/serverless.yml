@@ -48,3 +48,13 @@ functions:
             origin: ["*"]
             headers: ["*"]
 
+  updateUserDetails: 
+    handler: controller/user-controller.updateUserDetails
+    events:
+      - httpApi:
+          path: user/update
+          method: PUT
+          cors:
+            origin: ["*"]
+            headers: ["*"]
+
