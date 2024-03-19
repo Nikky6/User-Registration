@@ -28,3 +28,13 @@ functions:
             origin: ["*"]
             headers: ["*"]
 
+  userList: 
+    handler: controller/user-controller.userList
+    events:
+      - httpApi:
+          path: user/list
+          method: GET
+          cors:
+            origin: ["*"]
+            headers: ["*"]
+

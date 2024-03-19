@@ -10,6 +10,20 @@ export async function register(event,context){
         await disConnectionDb();
         return result
     } catch (error) {
+        await disConnectionDb()
+        return error
+    }
+}
+
+export async function userList(){
+    try {
+        await connectDb();
+        const data = await userService.userList();
+        await disConnectionDb();
+        return data
+    } catch (error) {
+        await disConnectionDb();
+        console.log('error in getting data',error)
         return error
     }
 }

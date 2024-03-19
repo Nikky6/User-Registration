@@ -21,3 +21,16 @@ export async function registerUser(payload){
         return error
     }
 }
+
+
+export async function userList(){
+    try {
+        const data = await UserRepository.userList();
+        if(!data){
+            throw 'No data found'
+        }
+        return data
+    } catch (error) {
+        return error
+    }
+}
