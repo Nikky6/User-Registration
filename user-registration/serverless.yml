@@ -58,3 +58,13 @@ functions:
             origin: ["*"]
             headers: ["*"]
 
+  deleteUserDetails: 
+    handler: controller/user-controller.deleteUserDetails
+    events:
+      - httpApi:
+          path: user/delete/{_id}
+          method: DELETE
+          cors:
+            origin: ["*"]
+            headers: ["*"]
+

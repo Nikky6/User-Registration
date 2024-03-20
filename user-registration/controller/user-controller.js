@@ -55,3 +55,17 @@ export async function updateUserDetails(event){
         return error
     }
 }
+
+export async function deleteUserDetails(event){
+    try {
+        const payload = event.pathParameters;
+        await connectDb();
+        const result = await userService.deleteUser(payload);
+        await disConnectDb();
+        return result
+    } catch (error) {
+        await disConnectDb();
+        console.log('error in deleting User',error);
+        return error
+    }
+}

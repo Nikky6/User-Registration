@@ -53,7 +53,7 @@ export async function updateUser(payload){
         if(!findUser){
             throw "No user found"
         }
-        const result = await UserRepository.update({
+        const result = await UserRepository.updateUser({
             firstName:payload?.firstName,
             lastName:payload?.lastName,
             email:payload?.email,
@@ -64,6 +64,20 @@ export async function updateUser(payload){
             age:payload?.age
         });
         return result
+    } catch (error) {
+        return error
+    }
+}
+
+
+export async function deleteUser(payload){
+    try {
+        let findUser = await UserRepository.findUserById(payload?.id);
+        if(!findUser){
+            throw "No user Found"
+        }
+        const result = await UserRepository.deleteUser(payload?.id);
+        return result;
     } catch (error) {
         return error
     }
