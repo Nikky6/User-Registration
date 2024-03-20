@@ -53,16 +53,7 @@ export async function updateUser(payload){
         if(!findUser){
             throw "No user found"
         }
-        const result = await UserRepository.updateUser({
-            firstName:payload?.firstName,
-            lastName:payload?.lastName,
-            email:payload?.email,
-            password:payload?.password,
-            confrimPassword:payload?.confrimPassword,
-            mobile:payload?.mobile,
-            gender:payload?.gender,
-            age:payload?.age
-        });
+        const result = await UserRepository.updateUser(payload);
         return result
     } catch (error) {
         return error
