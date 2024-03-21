@@ -11,7 +11,6 @@ export async function registerUser(payload){
             lastName:payload?.lastName,
             email:payload?.email,
             password:payload?.password,
-            confrimPassword:payload?.confrimPassword,
             mobile:payload?.mobile,
             gender:payload?.gender,
             age:payload?.age
