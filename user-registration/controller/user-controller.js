@@ -15,6 +15,21 @@ export async function register(event,context){
     }
 }
 
+export async function login(event){
+    try {
+        const payload = JSON.parse(event.body);
+        await connectDb();
+        const result = await userService.login(payload);
+        await disConnectDb();
+        return result;
+    } catch (error) {
+        await disConnectDb()
+        console.log(error);
+        return error
+    }
+}
+
+
 export async function userList(){
     try {
         await connectDb();

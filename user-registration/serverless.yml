@@ -5,6 +5,16 @@ provider:
   name: aws
   runtime: nodejs18.x
 
+custom:
+  serverless-offline:
+    localhost: 3008
+    httpPort: 3008
+    lambdaPort: 4008
+
+  middleware:
+    cleanFolder: false
+    pre:
+      - ./middleware.verifyToken
   
 plugins:
   - serverless-offline
@@ -23,6 +33,16 @@ functions:
     events:
       - httpApi:
           path: user/register
+          method: POST
+          cors:
+            origin: ["*"]
+            headers: ["*"]
+
+    login: 
+    handler: controller/user-controller.login
+    events:
+      - httpApi:
+          path: user/login
           method: POST
           cors:
             origin: ["*"]
