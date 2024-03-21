@@ -1,7 +1,7 @@
 import { connectDb, disConnectDb } from '../config/database';
 import * as userService from '../service/user-service'
 
-export async function register(event,context){
+export async function register(event, context) {
     try {
         const payload = JSON.parse(event.body) || {}
         await connectDb()
@@ -15,7 +15,7 @@ export async function register(event,context){
     }
 }
 
-export async function login(event){
+export async function login(event) {
     try {
         const payload = JSON.parse(event.body);
         await connectDb();
@@ -29,8 +29,7 @@ export async function login(event){
     }
 }
 
-
-export async function userList(){
+export async function userList() {
     try {
         await connectDb();
         const data = await userService.userList();
@@ -38,12 +37,12 @@ export async function userList(){
         return data
     } catch (error) {
         await disConnectDb();
-        console.log('error in getting data',error)
+        console.log('error in getting data', error)
         return error
     }
 }
 
-export async function getUserById(event){
+export async function getUserById(event) {
     try {
         const payload = event?.pathParameters;
         await connectDb();
@@ -57,7 +56,7 @@ export async function getUserById(event){
     }
 }
 
-export async function updateUserDetails(event){
+export async function updateUserDetails(event) {
     try {
         const payload = JSON.parse(event.body);
         await connectDb();
@@ -66,12 +65,12 @@ export async function updateUserDetails(event){
         return result
     } catch (error) {
         await disConnectDb();
-        console.log('error in updating details',error);
+        console.log('error in updating details', error);
         return error
     }
 }
 
-export async function deleteUserDetails(event){
+export async function deleteUserDetails(event) {
     try {
         const payload = event.pathParameters;
         await connectDb();
@@ -80,7 +79,7 @@ export async function deleteUserDetails(event){
         return result
     } catch (error) {
         await disConnectDb();
-        console.log('error in deleting User',error);
+        console.log('error in deleting User', error);
         return error
     }
 }

@@ -7,7 +7,7 @@ export async function connectDb() {
         const connection = await mongoose.connect(process.env.MONGO_URL);
         console.log('connected to DataBase')
     } catch (error) {
-        console.log('error in connecting Databse',error)
+        console.log('error in connecting Databse', error)
         return error.message
     }
 }
@@ -17,7 +17,7 @@ export async function disConnectDb() {
         const disConnect = await mongoose.disconnect(process.env.MONGO_URL);
         console.log('disconnected from Db')
     } catch (error) {
-        console.log('error in dsconnecting Db',error)
+        console.log('error in dsconnecting Db', error)
         return error.message
     }
 }

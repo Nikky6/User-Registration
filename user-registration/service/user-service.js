@@ -1,6 +1,7 @@
 const { UserRepository } = require("../repo/user-repo");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const redisClient = require('../config/redis.js')
 
 export async function registerUser(payload) {
     try {
@@ -24,7 +25,6 @@ export async function registerUser(payload) {
     }
 }
 
-
 export async function login(payload) {
     try {
         let { email, password } = data;
@@ -35,11 +35,11 @@ export async function login(payload) {
                 email: data?.email,
                 password: data?.password
             },
-            'secret',{expiresIn : '1h'});
+                'secret', { expiresIn: '1h' });
         }
-        return({
-            message:"login success",
-            token : token
+        return ({
+            message: "login success",
+            token: token
         });
     } catch (error) {
         return error
@@ -48,13 +48,23 @@ export async function login(payload) {
 
 export async function userList() {
     try {
-        const data = await UserRepository.userList();
-        if (!data) {
-            throw 'No data found'
+        if (!redisClient.isOpen) {
+            await redisClient.connect();
         }
-        return data
+        const redisData = await redisClient.get('users');
+        if (redisData) {
+            console.log('Data found in Redis cache');
+            return JSON.parse(redisData);
+        }
+        const userData = await UserRepository.userList();
+        if (!userData) {
+            throw new Error('No data found');
+        }
+        await redisClient.set('users', JSON.stringify(userData));
+        return userData;
     } catch (error) {
-        return error
+        console.error('Error in userList:', error);
+        return error;
     }
 }
 
@@ -72,17 +82,19 @@ export async function getUserById(payload) {
 
 export async function updateUser(payload) {
     try {
-        let findUser = await UserRepository.findUserByEmail({ email: payload?.email });
-        if (!findUser) {
-            throw "No user found"
+        const updatedUserData = await UserRepository.updateUser(payload);
+        if (!updatedUserData) {
+            throw new Error('User update failed');
         }
-        const result = await UserRepository.updateUser(payload);
-        return result
+        await redisClient.del('users');
+        const refreshedUserData = await UserRepository.userList();
+        await redisClient.set('users', JSON.stringify(refreshedUserData));
+        return updatedUserData;
     } catch (error) {
-        return error
+        console.error('Error in updateUser:', error);
+        return error;
     }
 }
-
 
 export async function deleteUser(payload) {
     try {
